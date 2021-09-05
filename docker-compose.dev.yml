@@ -1,0 +1,27 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./dockers/app/Dockerfile.dev
+    image: user-api-dev
+    container_name: user_api_app_dev
+    volumes:
+      - .:/go/src/myapp
+    ports:
+      - 3000:3000
+  db:
+    image: "postgres:13.4-alpine"
+    container_name: user_api_db_dev
+    environment:
+      POSTGRES_USER: ${DOCKER_DB_USER}
+      POSTGRES_PASSWORD: ${DOCKER_DB_PASSWORD}
+      POSTGRES_DB: ${DOCKER_DB_NAME}
+      TZ: "Asia/Bangkok"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 5435:5432
+volumes:
+  db-data:
+    driver: local
