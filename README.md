@@ -9,7 +9,7 @@ gin -a 3001 -p 3000
 access by url
 
 ```
-http://localhost:3001
+http://localhost:3000
 ```
 
 ### Run with docker (development)
