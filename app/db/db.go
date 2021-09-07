@@ -3,6 +3,8 @@ package db
 import (
 	"fmt"
 	"os"
+	"user-api/app/zapgorm2"
+	"user-api/app/zaplogger"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -19,7 +21,12 @@ func InitDB() {
 		os.Getenv("DB_NAME"),
 		os.Getenv("DB_PASSWORD"),
 	)
-	db, err := gorm.Open(postgres.Open(dbString), &gorm.Config{})
+	zaplog := zapgorm2.New(zaplogger.Log)
+	zaplog.SetAsDefault()
+	db, err := gorm.Open(postgres.Open(dbString), &gorm.Config{
+		// Logger: logger.Default.LogMode(logger.Info),
+		Logger: zaplog,
+	})
 
 	DB = db
 	DBError = err

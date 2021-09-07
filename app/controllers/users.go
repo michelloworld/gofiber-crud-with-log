@@ -3,6 +3,7 @@ package controllers
 import (
 	"user-api/app/db"
 	"user-api/app/models"
+	"user-api/app/zaplogger"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -10,6 +11,7 @@ import (
 type UsersController struct{}
 
 func (UsersController) Index(c *fiber.Ctx) error {
+	zaplogger.Log.Info("=== Finding all users")
 	var users []models.User
 	if result := db.DB.Find(&users); result.Error != nil {
 		panic(result.Error.Error())
@@ -34,6 +36,7 @@ func (UsersController) Create(c *fiber.Ctx) error {
 	if result := db.DB.Create(&user); result.Error != nil {
 		panic(result.Error.Error())
 	}
+	c.SendStatus(201)
 	return c.JSON(user)
 }
 
