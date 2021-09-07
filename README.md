@@ -29,7 +29,7 @@ curl -X POST -H "Content-Type: application/json" \
   http://localhost:3000/api/v1/users
 ```
 
-###### Update user
+##### Update user
 
 ```
 curl -X PUT -H "Content-Type: application/json" \
